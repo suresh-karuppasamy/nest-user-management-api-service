@@ -15,7 +15,7 @@ export class QueryBuilderService {
     const skip = (page - 1) * limit;
 
     // Build filter
-    let queryFilter: FilterQuery<T> = { ...filter };
+    let queryFilter: FilterQuery<T> = filter ? { ...filter } as FilterQuery<T> : {};
 
     // Add search condition if search term is provided
     if (search && searchFields?.length) {

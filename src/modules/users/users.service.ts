@@ -71,21 +71,22 @@ export class UsersService {
         .find(filter)
         .select(select)
         .sort(sort)
-        .skip(skip)
         .limit(limit)
+        .skip(skip)
         .exec(),
       this.userModel.countDocuments(filter).exec(),
     ]);
 
     const totalPages = Math.ceil(total / limit);
-    const hasNextPage = queryDto.page < totalPages;
-    const hasPreviousPage = queryDto.page > 1;
+    const currentPage = Number(queryDto.page ?? 1);
+    const hasNextPage = currentPage < totalPages;
+    const hasPreviousPage = currentPage > 1;
 
     return {
       data: users,
       meta: {
         total,
-        page: queryDto.page,
+        page: currentPage,
         limit,
         totalPages,
         hasNextPage,
